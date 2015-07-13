@@ -621,7 +621,8 @@ CREATE TABLE repositories (
     github_id integer,
     default_branch character varying(255),
     github_language character varying(255),
-    settings json
+    settings json,
+    provider character varying(255) DEFAULT 'github'::character varying
 );
 
 
@@ -668,7 +669,8 @@ CREATE TABLE requests (
     owner_id integer,
     owner_type character varying(255),
     result character varying(255),
-    message character varying(255)
+    message character varying(255),
+    jid character varying(255)
 );
 
 
@@ -985,7 +987,10 @@ CREATE TABLE users (
     is_syncing boolean,
     synced_at timestamp without time zone,
     github_scopes text,
-    education boolean
+    education boolean,
+    stash_id integer,
+    stash_oauth_token character varying(255),
+    stash_oauth_token_secret character varying(255)
 );
 
 
@@ -1585,6 +1590,13 @@ CREATE INDEX index_users_on_login ON users USING btree (login);
 
 
 --
+-- Name: index_users_on_stash_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_stash_id ON users USING btree (stash_id);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1886,3 +1898,9 @@ INSERT INTO schema_migrations (version) VALUES ('20150501152049');
 INSERT INTO schema_migrations (version) VALUES ('20150501152334');
 
 INSERT INTO schema_migrations (version) VALUES ('20150501152534');
+
+INSERT INTO schema_migrations (version) VALUES ('20150504150216');
+
+INSERT INTO schema_migrations (version) VALUES ('20150525085118');
+
+INSERT INTO schema_migrations (version) VALUES ('20150601101047');
