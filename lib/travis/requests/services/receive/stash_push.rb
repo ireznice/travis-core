@@ -42,7 +42,7 @@ module Travis
             if owner_name = data['owner_name']
               User.where(login: owner_name).first
             elsif user_name = (data['repository']['project']['owner'] && data['repository']['project']['owner']['name'])
-              User.where(login: owner_name).first
+              User.where(login: user_name).first
             elsif user_stash_id = data['repository']['owner_stash_id']
               User.where(stash_id: user_stash_id).first
             end
